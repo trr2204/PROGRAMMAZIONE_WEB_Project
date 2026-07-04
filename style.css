@@ -1,0 +1,772 @@
+body {
+    background: #ffe2e2;
+    padding: 0px;
+    margin: 0px;
+}
+
+
+/*
+    Se si selezionano gli elementi su mobile, non si colora
+*/
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button {
+    user-select: none;
+}
+/* Lo sfondo grigio dietro le voci delle varie pagine */
+.cardBackground {
+    border-radius: 20px;
+    border: 0px #ffffff solid;
+    background-color: #f1f1f1;
+    padding: 1px;
+    margin: 10px;
+}
+
+
+
+/*
+    SCHERMATA LOGIN/REGISTRAZIONE
+*/
+
+
+.auth-page {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    min-height: 100dvh;
+    transform: translateY(-60px);
+}
+
+
+#loginForm .searchContainer {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.10);
+}
+
+#registerForm .searchContainer {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.10);
+}
+
+.loginSquare {
+    margin: 10px;
+    padding: 20px;
+    max-width: 500px;
+    justify-content: center; 
+    align-items: center;     
+    height: 480px;
+    display:block;
+    background: white;
+    border-radius: 20px;
+    width: 390px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.08);
+}
+
+
+.loginSquare input {
+    border: 1px solid #bbbbbb;
+    width: 90%
+
+}
+.loginSquare h1, span {
+    text-transform: uppercase;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 
+    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
+    color:#323232;
+}
+#loginError, #emailError, .changeError {
+    color: #a9002a;
+    font-weight: bold;
+}
+
+.loginSquare > h1:first-of-type {
+    text-transform: none;
+    font-size: 32px;
+    color: #c90000;
+}
+
+
+/*
+    HOMEPAGE E RICETTARIO
+    tabella di tutte le ricette
+*/
+.recipeTable {
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+    gap: 2rem;
+    padding: 20px;
+}
+
+#favoritesTable {
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); 
+}
+
+.recipeTable img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.recipeTable div {
+    padding: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.recipeTable > div:hover{
+    transform: scale(1.10);
+    box-shadow: 0 6px 18px rgba(0,0,0,.25);
+
+}
+
+
+.recipeTable h1 {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 
+    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
+    text-transform: uppercase;
+    color: rgb(47, 47, 47);
+}
+
+.recipeTable b {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 
+    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
+    text-transform: uppercase;
+    color: rgb(47, 47, 47);
+}
+
+.imageTd {
+    position: relative;
+}
+
+#removeFavoritesButton {
+    display:none;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    border: 1px solid #e88fa5;
+    border-radius: 4px;
+    padding: 10px;
+    cursor: pointer;
+    background: rgb(255, 195, 195);
+    box-shadow: 0 4px 10px rgba(0,0,0,.15);
+}
+#removeFavoritesButton:hover {
+    background: rgb(255, 180, 180);
+}
+
+#removeFavoritesButton:active {
+    background: rgb(255, 157, 157);
+}
+
+.card:hover #removeFavoritesButton {
+    display: block;
+}
+
+
+button {
+    border-radius: 10px;
+    border: 0px solid;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.ingredientTr {
+    border-bottom: 1px solid #e8e8e8;
+    color:#323232;
+    font-weight: bold;
+}
+
+.ingredientTd,
+.measureTd {
+    padding: 10px 10px;
+    font-family: system-ui, sans-serif;
+    font-size: 15px;
+
+}
+
+.ingredientTd {
+    font-style: italic;
+    font-weight: bold;
+    width:100%;
+    color: #4d4d4d;
+}
+
+.measureTd {
+    text-align: right;
+    color: #666;
+    width:100%
+}
+
+.ingredientTr:nth-child(odd) {
+    background: #ebebeb;
+}
+
+
+/*
+    CARD del ricettario
+*/
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.08);
+    box-sizing: border-box; 
+}
+
+.card img {
+    width: 100%;
+    height: 200px; 
+    object-fit: cover; 
+    border-radius: 15px;
+}
+
+.infoCard {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: #f3f3f3;
+    border-radius: 20px;
+    box-sizing: border-box;
+
+}
+
+.infoText {
+    flex: 1; 
+    min-width: 80px;
+}
+
+
+.infoCard b {
+    text-transform: uppercase;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 
+        'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+        'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+
+.iconBox {
+    width: 40px;
+    height: 40px;
+
+    flex: 0 0 40px;   /* Per fare si che sia sempre quadrato */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.iconBox i{
+    color:white;
+    font-size:28px;
+}
+
+.difficulty {
+    background:#e88fa5;
+}
+
+.taste {
+    background:#f8da54;
+    
+}
+
+.date {
+    background:#91fc66;
+}
+
+.difficultyBg {
+    background: #ffd0d0;
+    border: 2px solid #ffb2b2;
+}
+.tasteBg {
+    background: #fcf5d6;
+    border: 2px solid #fff78a;
+}
+.dateBg {
+    background: #d7ffd7;
+    border: 2px solid #a8ff96;
+}
+
+
+/*
+    SINGOLA RICETTA
+*/
+.background {
+    border-radius: 20px;
+    border: 0px #ffffff solid;
+    background-color: #f1f1f1;
+    padding: 1px;
+    margin: 10px;
+}
+
+.recipeCard h1 {
+    text-transform: uppercase;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 
+        'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+        'Open Sans', 'Helvetica Neue', sans-serif;
+    color:#323232;
+}
+
+.recipeCard h2 {
+    text-transform: uppercase;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 
+        'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+        'Open Sans', 'Helvetica Neue', sans-serif;
+    color:#ed4747;
+}
+
+.recipeCard h3 {
+    text-transform: uppercase;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 
+        'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+        'Open Sans', 'Helvetica Neue', sans-serif;
+    color:#4c4c4c;
+    margin-top:0px;
+
+}
+
+.recipeCard span {
+    text-transform: none;
+}
+
+#strInstructions {
+    white-space: pre-line;  /*Mantiene i caratteri /n e /r sul parsato*/
+}
+
+textarea {
+    resize: none;
+    display:block;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    border: 1px solid #7d7d7d;
+    padding: 20px;
+    color:#323232;
+    font-size: 18px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 
+        'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+        'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.firstRow {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 20px;
+    margin: 20px;
+    align-items: stretch;
+}
+
+.middleRow {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 20px;
+    margin: 20px;
+}
+
+.lastRow {
+    display: grid;
+    grid-template-columns: 4fr 3fr;
+    gap: 20px;
+    margin: 20px;
+}
+
+.voteCard {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+.voteCard button {
+    display: inline-block;
+    gap:10px;
+}
+
+.redButton {
+    background: #ffb9b9;
+    color:#525252;    
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.redButton:hover {
+    background: #ffabab;
+}
+.redButton:active {
+    background: #ff9191;
+}
+
+.greenButton {
+    background: #b9ffbc;
+    color:#525252;    
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.greenButton:hover {
+    background: #a1ffa6;
+}
+.greenButton:active {
+    background: #83ff8a;
+}
+.greenButton:disabled {
+    background: #efffef;
+    cursor: default;
+    color:#c9c9c9;
+}
+
+#preparationDate {
+    border-radius: 20px;
+    padding:10px;
+    border: 1px solid #d3d3d3;
+}
+
+#favoritesButton {
+    background:#ff99af;
+    color: white;
+}
+#favoritesButton:active {
+    background:#a9002a
+}
+#favoritesButton:hover {
+    background:#ff517d
+}
+
+.note {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
+.recipeCard {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.1);
+}
+
+.title {
+    display: grid;
+    grid-template-columns: 1fr
+}
+
+
+.infoColumn {
+    display: block;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.imageColumn {
+    padding: 2px;
+    margin: 2px;
+    position: relative;
+}
+
+.imageColumn img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;   
+    height: 100%;   
+    object-fit: cover; 
+    border-radius: 20px;    
+
+}
+
+.infoColumn2 {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    align-items: center;
+    padding:10px;
+    gap:10px;
+}
+
+.infoColumn2 a {
+    cursor: pointer;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 
+        'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+        'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+
+@media (max-width: 700px) {
+    .firstRow {
+        grid-template-columns: auto;
+    }
+    .imageColumn img {
+        position: unset;
+        top:auto;
+        left:auto;
+    }
+    .middleRow {
+        grid-template-columns: auto;
+
+    }
+    .lastRow {
+        grid-template-columns: auto;
+    }   
+    .note  {
+        min-height: 200px;
+    }
+
+    .voteCard {
+        display: block;
+        flex-direction: column;
+    }
+
+    .voteCard button{
+        margin-top:10px;
+    }
+}
+
+
+/*
+    PROFILE BAR
+*/
+
+.profileBar {
+    position: sticky;
+    background: white;
+    padding: 10px;
+    justify-content: flex-end;
+    display: flex;
+    align-items: center;
+    top: 0;
+    z-index: 100;
+    height: 40px;
+    box-shadow: 0 4px 7px rgba(0,0,0,.30);
+}
+
+.profileBar span {
+    margin-right: auto;
+    font-weight: bold;
+    text-transform: none;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 
+        'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+        'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.menuUserCookbook span {
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+.menuUserCookbook button {
+    background: white;
+    border: 0px solid;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.menuUserCookbook button:hover {
+    background: rgb(236, 236, 236);
+}
+
+/*
+    Se la dimensione della barra è troppo piccola, i tasti finiscono
+    sopra la scritta
+*/
+@media (max-width: 480px) {
+    .profileBar > span {
+        opacity: 1;
+        transition: opacity .3s ease;
+    }
+
+    .profileBar:hover > span {
+        display:none;
+        opacity: 0;
+    }
+}
+@media (max-width: 350px) {
+    .profileBar > span {
+        display:none;
+    }
+}
+
+/*
+    Anima i tasti della barra in alto
+*/
+@media (max-width: 723px) {
+    .menuUserCookbook span {
+        opacity: 0;
+        white-space: nowrap;
+    }
+    .menuUserCookbook button:hover span {
+        opacity: 1;
+    }
+    .menuUserCookbook button {
+        max-width: 40px;
+        padding: 10px;
+        height: 40px;
+        align-items: center;
+        transition: .3s ease;        
+        overflow: hidden;
+        display: inline-flex;
+        flex-direction: row;
+
+    }
+    .menuUserCookbook button:hover {
+        max-width: 170px;
+
+    }
+
+}
+
+
+/*
+    SEARCHBAR
+    e barre LOGIN/REGISTRAZIONE
+*/
+
+.searchContainer {
+    position: sticky;
+    background: rgb(245, 245, 245);
+    padding: 10px;
+    margin: 10px;
+    border-radius: 20px;
+    z-index: 90;
+    justify-content: flex-end;
+    display: flex;
+    align-items: center;
+    top: 70px;
+    flex-direction: column;
+    gap:10px;
+    box-shadow: 0 4px 9px rgba(0,0,0,.30);
+
+}
+
+
+.searchbarContainer{
+    border-radius: 20px;
+    border: 2px solid #b0b0b0;
+    width: 100%;
+    display:flex;
+    width:100%;
+    gap:10px;
+    background: rgba(169, 15, 15, 0);
+    margin: 0px 10px 0px 10px;
+}
+
+#lettersContainerDrawer {
+    flex:0 0 40px;
+    width:40px;
+    height:40px;
+    padding: 0 50px 0 10px;           
+    white-space: nowrap;
+}
+
+.searchBar{
+    flex:1;
+    background: transparent;
+    border: 0px solid;
+}
+
+.searchBar:focus {
+    outline: none;
+}
+
+.searchButtonsContainer{
+    display:flex;
+    gap:10px;
+}
+
+.searchBarButton{
+    flex:1;
+    background: transparent;
+    border: 0px solid;
+    border-radius: 20px;
+    padding:10px;
+    cursor:pointer;
+}
+
+.searchBarButton:hover {
+    background: rgb(229, 229, 229);
+}
+
+/*Il div con le lettere dentro*/
+
+.lettersContainer { 
+    display: none; 
+    position: absolute; 
+    top: 50px; 
+    left: 0; 
+    background: white; 
+    border-radius: 5px; 
+    padding: 15px; 
+    box-shadow: 0 8px 20px rgba(0,0,0,.2); 
+    flex-wrap: wrap; gap: 10px; 
+    grid-template-columns: repeat(7, 1fr); 
+} 
+.lettersContainer button { 
+    background-color: #952e2e00; 
+    border-radius: 20px; 
+    border: none; 
+    font-size: 20px; 
+} 
+
+.lettersContainer button:hover { 
+    background-color: rgb(228, 228, 228); 
+} 
+.visible { 
+    display: grid; 
+}
+
+
+/*
+    In homepage, se la finestra ha larghezza minore di 700, o se su mobile,
+    il testo degli elementi nella searchbar può andare a capo
+*/
+@media(min-width:700px) {
+    .searchBarButton{
+        white-space: nowrap;
+    }
+
+}
+
+/*
+    PROFILE SETTINGS
+*/
+
+.profileSettingGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 20px;
+}
+
+.profileCard {
+    display: block;
+    flex-direction: column;
+}
+
+.profileCard .searchContainer {
+    width: 92%;
+    margin: 20px 0px 30px 0px;
+}
+
+.profileCard span {
+    display: block;
+    padding-bottom: 10px;
+}
+
+@media(max-width:700px) {
+    .profileSettingGrid {
+        display: grid;
+        grid-template-columns: auto;
+        gap: 20px;
+        margin: 20px;
+    }
+
+}

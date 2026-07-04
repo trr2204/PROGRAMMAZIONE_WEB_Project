@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="fontawesome/css/all.css">
+    <title>theMealDb Project: Ricettario</title>
+
+</head>
+<body>
+
+    <header class="profileBar">
+        <span>theMealDB Project</span>
+        <div class="menuUserCookbook">
+            <button id="homeButton"><i class="fa-solid fa-home"></i><span> Torna in Home</span></button>
+            <button id="profileButton"><i class="fa-solid fa-user"></i><span> Impostazioni Profilo</span></button>
+            <button id="logoutButton"><i class="fa-solid fa-arrow-right-from-bracket"></i><span> Log Out</span></button>
+        </div>
+    </header>
+
+    <div class="recipeTable cardBackground" id="favoritesTable">
+        <h1>Nessuna ricetta salvata</h1>
+    </div>
+
+    <script src="page.js"></script>
+    <script src="auth.js"></script>
+    <script src="api.js"></script>
+    <script src="cookbook.js"></script>
+
+</body>

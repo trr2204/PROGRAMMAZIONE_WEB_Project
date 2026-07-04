@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="fontawesome/css/all.css">
+    <title>theMealDB Project</title>
+
+
+</head>
+<body>
+    <header class="profileBar">
+        <span>theMealDB Project</span>
+        <div class="menuUserCookbook">
+            <button id="cookbookButton"><i class="fa-solid fa-book"></i><span>Ricettario</span></button>
+            <button id="profileButton"><i class="fa-solid fa-user"></i><span>Impostazioni Profilo</span></button>
+            <button id="logoutButton"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Log Out</span></button>
+        </div>
+    </header>
+
+    <header class="searchContainer">
+        <div class="searchbarContainer">                
+            <button class="searchBarButton" id="lettersContainerDrawer">A..Z <i class="fa-solid fa-angle-down"></i></button>
+            <div id="lettersContainer" class="lettersContainer"></div>
+            <input id="searchbar" class="searchBar" placeholder="Cerca una ricetta...">
+        </div>
+        <div class="searchButtonsContainer">
+            <button class="searchBarButton" id="searchName"><i class="fa-solid fa-magnifying-glass"></i> <span> Cerca per nome</span></button>
+            <button class="searchBarButton" id="searchIngredient"><i class="fa-solid fa-wheat-awn"></i> <span> Cerca per ingrediente</span></button>
+            <button class="searchBarButton" id="searchCategory"><i class="fa-solid fa-table-list"></i> <span> Cerca per categoria</span></button>
+            <button class="searchBarButton" id="searchArea"><i class="fa-solid fa-flag"></i> <span> Cerca per area</span></button>
+        </div>
+
+    </header>
+
+
+    <br>
+
+    <div class="recipeTable cardBackground" id="recipeContainer"></div>
+        
+    <script src="page.js"></script>
+    <script src="auth.js"></script>
+    <script src="api.js"></script>
+
+</body>
