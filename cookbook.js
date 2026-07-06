@@ -33,7 +33,7 @@ if (page.includes("recipe.html")) {
         non vuoti*/
     thisRecipe.forEach((recipe) => {
         if (recipe.difficulty != null) {
-            difficulty += Number(recipe.difficulty);
+            difficulty += Number(recipe.difficulty);    //Quando leggi da localStorage, è una stringa. Quindi converte
             difficultyCounter++;
         }
         if (recipe.taste != null) {
@@ -79,6 +79,8 @@ if (page.includes("recipe.html")) {
         recipe.username == loggedUser &&
         recipe.recipeId == recipeId
     );
+
+    //Se date è nullo, allora il valore è vuoto
     preparationDate.value = existingRecipe?.date || "";
 
     /* All'apertura della pagina, controlla se la ricetta fa parte dei preferiti.
@@ -110,18 +112,21 @@ if (page.includes("recipe.html")) {
     //Tasto "Lascia una recensione"
     const leaveReviewButton = document.getElementById("leaveReviewButton");
     leaveReviewButton.addEventListener("click", function() {
+        //I valori devono essere tutti compilati 
         if ((difficultySlider.value != "0.0") && (tasteSlider.value != "0.0") && (preparationDate.value != "")) {
+            //Verifica nel localStorage (userRecipes) se l'utente ha mai fatto movimenti su quella ricetta
             const existingRecipe =
                 userRecipes.find(recipe =>
                 recipe.username == loggedUser &&
                 recipe.recipeId == recipeId
             );
-
+            //Se si: modifica i valori salvati
             if (existingRecipe) {
                 existingRecipe.difficulty = difficultySlider.value;
                 existingRecipe.taste = tasteSlider.value
                 existingRecipe.date = preparationDate.value;
             } else {
+                //Altrimenti crea una nuova voce in userRecipes (localStorage)
                 userRecipes.push({
                     username: loggedUser,
                     recipeId: recipeId,
@@ -135,13 +140,12 @@ if (page.includes("recipe.html")) {
                 });
             }
 
-            localStorage.setItem(
-                "userRecipes",
-                JSON.stringify(userRecipes)
-            );
-            //ricarica la pagina per aggiornare il numero di voti
+            //Quando ho fatto le modifiche scrive nel localStorage
+            localStorage.setItem("userRecipes", JSON.stringify(userRecipes));
+
+            //Ricarica la pagina per aggiornare il numero di voti
             location.reload();
-        } else {
+        } else {    //Se non hai compilato almeno uno tra i campi difficulty, taste e preparationDate
             const reviewError = document.getElementById("reviewError");
             reviewError.innerHTML = "DEVI COMPILARE TUTTI I CAMPI"
         }
@@ -220,7 +224,7 @@ if (page.includes("recipe.html")) {
     saveNoteButton.addEventListener("click", function() {
         const userRecipes = JSON.parse(localStorage.getItem("userRecipes")) || [];
         const loggedUser = localStorage.getItem("loggedUser");
-        const note = noteInput.value;
+        const note = noteInput.value;   //valore letto dal campo note
         const existingRecipe =
             userRecipes.find(recipe =>
                 recipe.username == loggedUser &&
@@ -244,13 +248,9 @@ if (page.includes("recipe.html")) {
                 favorite: false,
                 date: ""
             });
-
         }
 
-        localStorage.setItem(
-            "userRecipes",
-            JSON.stringify(userRecipes)
-        );
+        localStorage.setItem("userRecipes", JSON.stringify(userRecipes));
         //Disabilita il tasto e notifica che la nota è stata salvata
         saveNoteButton.disabled = true;
         saveNoteButton.innerHTML = "Salvato"
@@ -263,15 +263,17 @@ if (page.includes("recipe.html")) {
         const userRecipes = JSON.parse(localStorage.getItem("userRecipes")) || [];
         const loggedUser = localStorage.getItem("loggedUser");
 
-        const existingRecipe =
-        userRecipes.find(recipe =>
+
+        //Utente ha mai interagito con quella ricetta?
+        const existingRecipe = userRecipes.find(recipe =>
             recipe.username == loggedUser &&
             recipe.recipeId == recipeId
         );
 
+        //Si: siccome hai premuto il tasto, inverte la scelta. Se era nei preferiti, la toglie e viceversa
         if (existingRecipe) {
             existingRecipe.favorite = !existingRecipe.favorite;
-        } else {
+        } else {    //Aggiunge ai preferiti la ricetta, e anche il collegamento utente-ricetta
             userRecipes.push({
                 username: loggedUser,
                 recipeId: recipeId,
@@ -285,19 +287,17 @@ if (page.includes("recipe.html")) {
             });
         }
 
-        localStorage.setItem(
-            "userRecipes",
-            JSON.stringify(userRecipes)
-        );
+        localStorage.setItem("userRecipes", JSON.stringify(userRecipes));
         changeHeart();
     });
     
+// ---- IL RICETTARIO ----
 } else if (page.includes("cookbook.html")) {
 
     const userRecipes = JSON.parse(localStorage.getItem("userRecipes")) || [];
-
     const loggedUser = localStorage.getItem("loggedUser");
 
+    //Ottiene un array con tutte le ricette che l'utente ha messo tra i preferiti
     const favorites = userRecipes.filter(
         e => (e.username == loggedUser) && (e.favorite == true)
     )
