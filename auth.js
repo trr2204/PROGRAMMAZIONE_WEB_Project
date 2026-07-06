@@ -140,12 +140,25 @@ if(registerForm) {
 //Cancella l'account, ed effettua la disconnessione
 
 if (document.getElementById("deleteAccountButton")) {
-        //Tasto per eliminare l'account. Recupera l'elenco degli utneti, trova quello che ha la stessa
+        //Tasto per eliminare l'account. Recupera l'elenco degli utenti, trova quello che ha la stessa
         //email del loggato, lo rimuove ed effettua la disconnessione.
         document.getElementById("deleteAccountButton").addEventListener("click", function (event) {
                 if (confirm("Sei davvero sicuro di voler cancellare il tuo " +
-                "account? Questo eliminerà permanentemente i dati" +
+                "account? Questo eliminerà permanentemente i dati " +
                 "dal sito!")) {
+
+                        //Elimina i movimenti fatti dall'utente con le ricette: preferiti, recensioni etc.
+                        //Questo per evitare che, in caso qualcuno si registri con lo stesso account, 
+                        //abbia accesso a quei dati
+                        const userMovements = JSON.parse(localStorage.getItem("userRecipes")) || [];
+
+                        const newUserMovements = userMovements.filter(recipe => {
+                            return recipe.username != localStorage.getItem("loggedUser");
+                        });
+
+                        localStorage.setItem("userRecipes", JSON.stringify(newUserMovements));
+
+                        //Procede con l'eliminazione
                         const users = JSON.parse(localStorage.getItem("users")) || [];
                         const newUsers = users.filter(
                                 user => user.email != localStorage.getItem("loggedMail")
@@ -155,6 +168,7 @@ if (document.getElementById("deleteAccountButton")) {
                         localStorage.removeItem("loggedMail");
                         localStorage.removeItem("loggedUser");
                         localStorage.removeItem("LogInDate");
+
                         window.location.replace("index.html");
 
                 }
