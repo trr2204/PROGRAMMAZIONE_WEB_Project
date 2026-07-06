@@ -304,11 +304,12 @@ if (page.includes("recipe.html")) {
     
     const favoritesTable = document.getElementById("favoritesTable");
 
+    //Svuota la tabella prima di riempirla
     if (favorites.length > 0) {
         favoritesTable.innerHTML = "";    
     }
 
-
+    //Per ogni ricetta che l'utente ha nei preferiti, crea la card e la compila
     favorites.forEach(e => {
         const card = document.createElement("div");
         const imageTd = document.createElement("div");
@@ -317,7 +318,7 @@ if (page.includes("recipe.html")) {
         card.classList.add("card");
 
 
-        //aggiunge l'immagine in tabella
+        //Aggiunge l'immagine in nella card
         const img = document.createElement("img");
         img.src = e.recipeThumb;
         imageTd.appendChild(img);
@@ -382,30 +383,29 @@ if (page.includes("recipe.html")) {
         removeFavoritesButton.classList.add("button");
         removeFavoritesButton.innerHTML = `<i class="fa-solid fa-xmark"></i>`;
         removeFavoritesButton.addEventListener("click", function(event) {
-            event.stopPropagation();
+            event.stopPropagation(); //previene che il click sotto si trasmetta, aprendo la pagina ricetta
             event.preventDefault(); //previene su mobile lo zoom della card
             e.favorite = false;
-            localStorage.setItem(
-                "userRecipes",
-                JSON.stringify(userRecipes)
-            );
+            localStorage.setItem("userRecipes", JSON.stringify(userRecipes));
             card.remove();
+            //Se la tabella è vuota, mostra una scritta
             if (favoritesTable.childElementCount == 0) {
                 const text = document.createElement("h1");
                 text.innerHTML = "Nessuna ricetta salvata";
                 favoritesTable.appendChild(text);
             }
         });
+        //La X in alto a destra dell'immagine per togliere dai preferiti
         imageTd.appendChild(removeFavoritesButton);
 
         card.appendChild(dataTd);
-
+        //cliccare la card apre la pagina della ricetta
         card.addEventListener("click", function() {
             window.location.href =
                 `recipe.html?id=${e.recipeId}`;
             
         })
+
         favoritesTable.appendChild(card);
     });
-
 }
