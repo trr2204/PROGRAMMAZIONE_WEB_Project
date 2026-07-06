@@ -4,32 +4,24 @@
     Gestisce anche le funzionalità di ricerca
 */
 
-let indirizzo = "https://www.themealdb.com/api/json/v1/1/search.php?s="
+let address = "https://www.themealdb.com/api/json/v1/1/search.php?s="
 
 // ----HOMEPAGE----
 //Page è definito in auth
 if (page.includes("home.html")) {
-        const recipeContainer = document.getElementById("recipeContainer");
-
+        const recipeContainer = document.getElementById("recipeContainer"); //La tabella con tutte le ricette
         
+        //Esegue fetch dell'API
         async function loadRecipes(addressToFetch) {
             const response = await fetch(
-                /*
-                avvia un server locale: spostati nella cartella dove c'è il progetto web
-                avvia powershell lì
-                & "C:\Users\pc250\Documents\Pietro\Progetto Bresciani\blender-5.0.1-windows-x64\5.0\python\bin\python.exe" -m http.server 8000
-                usa il comando lì sopra con la &
-
-                apri il progetto metttendo localhost:8000 su browser
-                
-                */
-                //"https://www.themealdb.com/api/json/v1/1/search.php?s="
                 addressToFetch
             );
             const data = await response.json();
 
-            //svuota la tabella nel caso contenga qualcosa poi la riempie
+            //Svuota la tabella nel caso contenga qualcosa poi la riempie.
+            //Ogni ricetta è una card con nome e immagine
             recipeContainer.innerHTML = "";
+            //meals è stato scaricato dalla api
             data.meals.forEach(recipe => {
                 const cell = document.createElement("div");
                 cell.classList.add("card");
@@ -47,18 +39,21 @@ if (page.includes("home.html")) {
             });
             
         }
-        loadRecipes(indirizzo);
+        loadRecipes(address);   //chiama la funzione all'apertura della pagina
 
         //RICERCA PER LETTERA
         const lettersContainerDrawer = document.getElementById("lettersContainerDrawer");
         const lettersContainer = document.getElementById("lettersContainer");
         lettersContainerDrawer.addEventListener("click", function(e) {
-            e.stopPropagation();
+            e.stopPropagation(); //premere le lettere non deve attivare eventuali contenuti sotto il div
             lettersContainer.classList.toggle("visible");
         });
+        //Cliccare in qualsiasi punto della pagina chiude il div
         document.addEventListener("click", function() {
             lettersContainer.classList.remove("visible");
         })
+
+        //Se il cursore sta per troppo tempo fuori dal div, questo si chiude
         let timer;
         lettersContainer.addEventListener("mouseleave", function(e) {
             e.stopPropagation();
@@ -66,11 +61,12 @@ if (page.includes("home.html")) {
                 lettersContainer.classList.remove("visible");
             }, 500)
         });
+        //Se rientro nel div, resetta il timer e rimane aperto
         lettersContainer.addEventListener("mouseover", function() {
             clearTimeout(timer);
         })
-        //in ogni caso deve generare l'elenco delle lettere
 
+        //Viene generato l'elenco delle lettere e ad ognuna è aggiunta l'azione
         for (let i = 65; i <= 90; i++) {
             const button = document.createElement("button");
 
@@ -102,9 +98,10 @@ if (page.includes("home.html")) {
 
 
 
-// ----SINGOLA RICETTA----
+// ---- pagina della SINGOLA RICETTA----
 } else if (page.includes("recipe.html")) {
     async function loadRecipe() {
+        //Legge l'ID dalle query dell'URL: ottenuto l'id, recupera i dati di quella singola ricetta
         const params = new URLSearchParams(window.location.search);
         const recipeId = params.get("id");
         const response = await fetch(
@@ -114,7 +111,7 @@ if (page.includes("home.html")) {
 
         const recipe = data.meals.find(recipe => recipe.idMeal == recipeId);
 
-        //Da qui inizia a compilare i campi
+        //Da qui inizia a compilare i campi della pagina
         document.title = recipe.strMeal;
         document.getElementById("strMeal").innerHTML = recipe.strMeal;
         document.getElementById("strMealThumb").src = recipe.strMealThumb;
@@ -126,16 +123,18 @@ if (page.includes("home.html")) {
         })
 
 
-        //Inserisce gli ingredienti e le dosi in una tabella
+        //Inserisce gli ingredienti e le dosi fetchate in una tabella
         const strIngredient = document.getElementById("strIngredient");
         for (let i = 1; ; i++) {
 
             const ingredient = recipe[`strIngredient${i}`];
             const measure = recipe[`strMeasure${i}`];
 
+            //La exit condition: esce dal ciclo quando non ci sono più ingredienti da leggere
             if (ingredient == "" || ingredient == null) {
                 break;
             }
+            //ogni riga è un ingrediente e la sua misura
             const tr = document.createElement("tr");
             tr.classList.add("ingredientTr");
             const tdIngredient = document.createElement("td");
@@ -155,7 +154,4 @@ if (page.includes("home.html")) {
     }
     loadRecipe();
 
-} else if (page.includes("cookbook.html")) {
-  
 }
-

@@ -10,6 +10,7 @@
 
 </head>
 <body>
+    <!-- Barra con i tasti per navigare -->
     <header class="profileBar">
         <div class="menuUserCookbook">
             <button id="homeButton"><i class="fa-solid fa-home"></i><span> Torna in Home</span></button>
@@ -18,8 +19,11 @@
         </div>
     </header>
 
+    <!-- Sfondo grigio che contiene tutti i tasti -->
     <div class="cardBackground">
+        <!-- Div con l'elenco delle varie card -->
         <div class="profileSettingGrid">
+            <!-- Impostazioni per cambiare username -->
             <div class="recipeCard profileCard">
                 <h3>USERNAME</h3>
                 <input class="searchContainer" id="username" style="border:none; outline:none; background:transparent" disabled readonly></input> 
@@ -31,12 +35,14 @@
                 <span class="changeError" id="errorText"></span>
 
             </div>
+            <!-- Div con solo la data di nascita -->
             <div class="recipeCard profileCard">
                 <h3>DATA DI NASCITA</h3>
                 <input id="birthdate" type="date" style="border:none; outline:none; background:transparent" readonly></input>
 
             </div>
 
+            <!-- Div con i tasti per cambiare la mail -->
             <div class="recipeCard profileCard">
                 <h3>EMAIL</h3>
                 <input class="searchContainer" id="email" style="border:none; outline:none; background:transparent" disabled readonly></input>
@@ -47,6 +53,7 @@
                 </div>
             </div>
 
+            <!-- Div con i tasti per cambiare la password -->
             <div class="recipeCard profileCard">
                 <h3>CAMBIA PASSWORD</h3>
                 <button id="changePassword">CAMBIA PASSWORD</button>
@@ -57,6 +64,7 @@
                 </div>
             </div>
 
+            <!-- Div con il tasto per cancellare l'account -->
             <div class="recipeCard profileCard">
                 <h3>ACCOUNT</h3>
                 <button class="redButton" id="deleteAccountButton">CANCELLA ACCOUNT</button>

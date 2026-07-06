@@ -1,3 +1,5 @@
+// I tasti della header
+
 const profileButton = document.getElementById("profileButton");
 const homeButton = document.getElementById("homeButton");
 const cookbookButton = document.getElementById("cookbookButton");

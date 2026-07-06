@@ -4,18 +4,20 @@ const page = window.location.pathname;
 //reindirizza alla schermata di login.
 //La sessione scade automaticamente dopo 10 minuti.
 const loggedIn =
-    localStorage.getItem("loggedIn") == "true" &&
+    localStorage.getItem("loggedIn") == "true" &&       
     Date.now() <
     (
         Number(localStorage.getItem("LogInDate"))
         + (10 * 60 * 1000)
     );
 
-if(page.includes("register.html") || page.includes("index.html")){
+//Se vuoi andare nelle pagine di registrazione o login ma la sessione è in corso, ti reindirizza nella homepage.
+if(page.includes("register.html") || page.includes("index.html")) { 
         if (loggedIn) {
                 window.location.replace("home.html");
         }
 }
+//Se vuoi andare in qualsiasi pagina ma non sei loggato, ti reindirizza nella pagina di login
 else {
         if (!loggedIn) {
                 window.location.replace("index.html");
@@ -29,6 +31,8 @@ const loginForm = document.getElementById("loginForm");
 
 if(registerForm) {
 
+    //Quando premi il tasto registra, deve verificare che hai riempito i campi e che non esista
+    //un altro user con i tuoi stessi dati
     document.getElementById("registerButton").addEventListener("click", function(event) {
 
         const email = document.getElementById("email").value;
@@ -68,10 +72,10 @@ if(registerForm) {
                 // Aggiunge user
                 users.push(newUser);
         
-                // Salva tutto
+                // Salva tutto in localStorage
                 localStorage.setItem("users", JSON.stringify(users));
                 alert("Registrazione effettuata con successo!");
-                window.location.replace("index.html");
+                window.location.replace("index.html"); //replace non permette di tornare indietro
         }
 
     });
@@ -80,6 +84,8 @@ if(registerForm) {
     
     //===== LOGIN =====
 } else if (loginForm) {
+    //Comportamento del tasto login. Verifica che i campi siano stati compilati
+    //e che inserisci user e pass corrette
     document.getElementById("loginButton").addEventListener("click", function(event) {
 
         const email = document.getElementById("email").value;
@@ -87,22 +93,26 @@ if(registerForm) {
 
         if (!email || !password) return;
 
-
+        //Legge gli utenti da localStorage
         let users = JSON.parse(localStorage.getItem("users")) || []; 
 
-        const userTrovato = users.find(user => (
+        //Se nel database utenti trova uno con stessa mail, verifica se la password inserita
+        //corrisponde. 
+        const foundUser = users.find(user => (
                 user.email == email
         ));
 
-        if (userTrovato) {
-                if (userTrovato.password == password) {
+        if (foundUser) {
+                if (foundUser.password == password) {
+                        /*Se le credenziali sono corrette, riempie il localStorage con i dati necessari
+                        alla verifica della sessione: l'orario di login, l'utente loggato, etc*/
                         localStorage.setItem("loggedIn", true);
                         localStorage.setItem("LogInDate", Date.now());
                         localStorage.setItem("loggedMail", email)
-                        localStorage.setItem("loggedUser", userTrovato.username)
+                        localStorage.setItem("loggedUser", foundUser.username)
                         window.location.replace("home.html");
                 } else {
-                        document.getElementById("loginError").innerHTML = "User e/o passord errata";
+                        document.getElementById("loginError").innerHTML = "User e/o password errata";
                 }
         } else {
                 document.getElementById("loginError").innerHTML = "Account inesistente";
@@ -130,6 +140,8 @@ if(registerForm) {
 //Cancella l'account, ed effettua la disconnessione
 
 if (document.getElementById("deleteAccountButton")) {
+        //Tasto per eliminare l'account. Recupera l'elenco degli utneti, trova quello che ha la stessa
+        //email del loggato, lo rimuove ed effettua la disconnessione.
         document.getElementById("deleteAccountButton").addEventListener("click", function (event) {
                 if (confirm("Sei davvero sicuro di voler cancellare il tuo " +
                 "account? Questo eliminerà permanentemente i dati" +
@@ -163,8 +175,8 @@ if (page.includes("profile.html")) {
 
 
           // ===== MODIFICA DATI ACCOUNT =====
-        //Permette di cambiare nome utente e mail, soltanto se non ci sono altri account che le usano;
-        //la password può sempre essere cambiata
+        //Permette di cambiare nome utente e mail, non puoi impostare valori usati da altri account.
+        //si può mettere la password usata da altri account
         
         //CAMBIO EMAIL
         const changeMail = document.getElementById("changeMail");
@@ -175,7 +187,8 @@ if (page.includes("profile.html")) {
         
         if (changeMail) {
                 changeMail.addEventListener("click", function (event) {
-                        //stile dei tasti                        
+                        //modifica lo stile dei tasti: rende modificabile la casella in cui è
+                        //scritto l'indirizzo email, così da poter inserire il nuovo                       
                         emailBox.readOnly = false;
                         emailBox.disabled = false;
                         confirmEmailChange.style.display = "block";
@@ -189,6 +202,8 @@ if (page.includes("profile.html")) {
         }
         if (cancelEmailChange) {
                 cancelEmailChange.addEventListener("click", function (event) {
+                        //modifica lo stile dei tasti: rende non modificabile la casella in cui è
+                        //scritto l'indirizzo email, e cancella le modifiche                       
                         emailBox.readOnly = true;
                         emailBox.disabled = true;
                         emailBox.style.border = "none";
@@ -204,21 +219,22 @@ if (page.includes("profile.html")) {
          
         }
         if (confirmEmailChange) {
+                //Effettua il cambio mail concretamente
                 confirmEmailChange.addEventListener("click", function (event) {
-                        //cambia la mail
                         
+                        //Verifica se esiste già un user con la stessa mail
                         let users = JSON.parse(localStorage.getItem("users")) || [];
-                        //se nessun altro ha quella mail, questa casella sarà vuota. se è vuota effettua il cambio mail
                         const alreadyExist = users.find(user => 
                                 user.email == mailField.value &&
                                 user.email !== localStorage.getItem("loggedMail")
                         )
-                        //user attuale a cui cambiare il dato
+                        //Restituisce da array users la voce dell'utente corrente 
                         const currentUser = users.find(user => {
                                 return user.username == localStorage.getItem("loggedUser");
                         })
 
-                        
+                        //Se non esiste l'user, effettua il cambio mail nell'array, poi scrive il
+                        //localStorage con il contenuto dell'array
                         if (!alreadyExist) {
                                 currentUser.email = mailField.value;
                                 localStorage.setItem("users", JSON.stringify(users));
@@ -228,9 +244,7 @@ if (page.includes("profile.html")) {
                                 errorText.innerHTML = "Email già assegnata ad altro utente!";
                         }
                         
-
-                        
-                        //ripristina i campi
+                        //Ripristina lo stato iniziale dei campi
                         cancelEmailChange.click();
                 })
         }
@@ -244,7 +258,8 @@ if (page.includes("profile.html")) {
                 
         if (changeUsername) {
                 changeUsername.addEventListener("click", function (event) {
-                        //stile dei tasti                        
+                        //modifica lo stile dei tasti: rende modificabile la casella in cui è
+                        //scritto l'username, così da poter inserire il nuovo                        
                         usernameBox.readOnly = false;
                         usernameBox.disabled = false;
                         confirmUserChange.style.display = "block";
@@ -258,6 +273,8 @@ if (page.includes("profile.html")) {
         }
         if (cancelUserChange) {
                 cancelUserChange.addEventListener("click", function (event) {
+                        //modifica lo stile dei tasti: rende non modificabile la casella in cui è
+                        //scritto l'username, e cancella le modifiche 
                         usernameBox.readOnly = true;
                         usernameBox.disabled = true;
                         usernameBox.style.border = "none";
@@ -273,20 +290,23 @@ if (page.includes("profile.html")) {
          
         }
         if (confirmUserChange) {
+                //Effettua il cambio user concretamente
                 confirmUserChange.addEventListener("click", function (event) {
                         
+                        //Verifica se esiste già un user con lo stesso username
+
                         let users = JSON.parse(localStorage.getItem("users")) || [];
-                        //verifica se qualcun altro ha quell'user: se il campo diventa diverso dal vuoto, non effettua il cambio di user
                         const alreadyExist = users.find(user => 
                             user.username === usernameField.value &&
                             user.username !== localStorage.getItem("loggedUser")
                         )
-                        //restituisce user corrente: per cambiargli il dato
+                        //Restituisce da array users la voce dell'utente corrente 
                         const currentUser = users.find(user => {
                                 return user.username == localStorage.getItem("loggedUser");
                         })
 
-                        //se non è giù assegnato a qualcun altro, effettua il cambio di user
+                        //Se non esiste l'user, effettua il cambio username nell'array, poi scrive il
+                        //localStorage con il contenuto dell'array
                         if (!alreadyExist) {
                                 currentUser.username = usernameField.value;
                                 localStorage.setItem("users", JSON.stringify(users));
@@ -298,7 +318,7 @@ if (page.includes("profile.html")) {
                         
 
                         
-                        //ripristina i campi
+                        //Ripristina lo stato iniziale dei campi
                         cancelUserChange.click();
                 })
         }
@@ -310,6 +330,7 @@ if (page.includes("profile.html")) {
         const cancelPasswordChange = document.getElementById("cancelPasswordChange");
         if (changePassword) {
                 changePassword.addEventListener("click", function(event) {
+                        //Fa comparire a schermo l'input dove digitare la nuova password
                         changePasswordInput.style.display = "block";
                         confirmPasswordChange.style.display = "block";
                         cancelPasswordChange.style.display = "block";
@@ -318,6 +339,7 @@ if (page.includes("profile.html")) {
         }
         if (cancelPasswordChange) {
                 cancelPasswordChange.addEventListener("click", function(event) {
+                        //Se annulli la modifica, toglie dallo schermo l'input dove modificare la password
                         changePasswordInput.innerHTML = "";
                         changePasswordInput.style.display = "none";
                         cancelPasswordChange.style.display = "none";
@@ -325,6 +347,9 @@ if (page.includes("profile.html")) {
                 })          
         }
         if (confirmPasswordChange) {
+                //Modifica concretamente la password. Crea un array dall'elenco utenti del localStorage,
+                //trova l'user che corrisponde a quello loggato, cambia la password nell'array,
+                //poi salva l'array modificato nel localStorage
                 confirmPasswordChange.addEventListener("click", function(event) {
                         const users = JSON.parse(localStorage.getItem("users"));
                         const userToChange = users.find(user => user.email == localStorage.getItem("loggedMail"));

@@ -6,15 +6,16 @@ body {
 
 
 /*
-    Se si selezionano gli elementi su mobile, non si colora
+    Se si selezionano gli elementi su mobile, non devono colorarsi,
+    altrimenti l'esperienza utente sarebbe scomoda
 */
 * {
     -webkit-tap-highlight-color: transparent;
 }
-
 button {
     user-select: none;
 }
+
 /* Lo sfondo grigio dietro le voci delle varie pagine */
 .cardBackground {
     border-radius: 20px;
@@ -28,10 +29,11 @@ button {
 
 /*
     SCHERMATA LOGIN/REGISTRAZIONE
+    index.html & register.html
 */
 
 
-.auth-page {
+.auth-page {         /*Body delle pagine di login/registrazione*/
     display: flex;
     justify-content: center; 
     align-items: center; 
@@ -40,13 +42,11 @@ button {
 }
 
 
-#loginForm .searchContainer {
+#loginForm .searchContainer,
+#registerForm .searchContainer {    
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.10);
 }
 
-#registerForm .searchContainer {
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.10);
-}
 
 .loginSquare {
     margin: 10px;
@@ -75,11 +75,14 @@ button {
     'Open Sans', 'Helvetica Neue', sans-serif;
     color:#323232;
 }
+
+/*Messaggi di errore mostrati in varie pagine*/
 #loginError, #emailError, .changeError {
     color: #a9002a;
     font-weight: bold;
 }
 
+/*Prende il primo h1 trovato (il titolo "theMealDB...")*/
 .loginSquare > h1:first-of-type {
     text-transform: none;
     font-size: 32px;
@@ -89,7 +92,8 @@ button {
 
 /*
     HOMEPAGE E RICETTARIO
-    tabella di tutte le ricette
+    tabella di tutte le ricette, sia in homepage che nell'elenco preferiti del ricettario
+    home.html & cookbook.html
 */
 .recipeTable {
     display: grid; 
@@ -98,7 +102,7 @@ button {
     padding: 20px;
 }
 
-#favoritesTable {
+#favoritesTable {   /*Modifica recipeTabel*/
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); 
 }
 
@@ -114,6 +118,7 @@ button {
     cursor: pointer;
 }
 
+/*Solo le card (i figli diretti della tabella) devono zoomarsi, non i singoli elementi contenti nelle card*/
 .recipeTable > div:hover{
     transform: scale(1.10);
     box-shadow: 0 6px 18px rgba(0,0,0,.25);
@@ -141,6 +146,7 @@ button {
     position: relative;
 }
 
+/*Nel ricettario, a X in alto a destra delle schede*/
 #removeFavoritesButton {
     display:none;
     position: absolute;
@@ -174,40 +180,11 @@ button {
     cursor: pointer;
 }
 
-.ingredientTr {
-    border-bottom: 1px solid #e8e8e8;
-    color:#323232;
-    font-weight: bold;
-}
-
-.ingredientTd,
-.measureTd {
-    padding: 10px 10px;
-    font-family: system-ui, sans-serif;
-    font-size: 15px;
-
-}
-
-.ingredientTd {
-    font-style: italic;
-    font-weight: bold;
-    width:100%;
-    color: #4d4d4d;
-}
-
-.measureTd {
-    text-align: right;
-    color: #666;
-    width:100%
-}
-
-.ingredientTr:nth-child(odd) {
-    background: #ebebeb;
-}
 
 
 /*
-    CARD del ricettario
+    CARD del ricettario.
+    Sono inserite da cookbook.js, non si trovano nel file HTML
 */
 .card {
     display: flex;
@@ -255,10 +232,13 @@ button {
 }
 
 
-.iconBox {
+/*  
+    Nelle recensioni, gusto, difficoltà e data, hanno colori diversi.
+    mostrato anche in recipe.html pagina singola ricetta 
+*/
+.iconBox {  /*L'immagine a sinistra di difficoltà, voto o data (*/
     width: 40px;
     height: 40px;
-
     flex: 0 0 40px;   /* Per fare si che sia sempre quadrato */
     display: flex;
     justify-content: center;
@@ -299,7 +279,7 @@ button {
 
 
 /*
-    SINGOLA RICETTA
+    pagina della SINGOLA RICETTA
 */
 .background {
     border-radius: 20px;
@@ -309,6 +289,43 @@ button {
     margin: 10px;
 }
 
+/*Le impostazioni grafiche della tabella degli ingredienti*/
+.ingredientTr {
+    border-bottom: 1px solid #e8e8e8;
+    color:#323232;
+    font-weight: bold;
+}
+
+.ingredientTd,
+.measureTd {
+    padding: 10px 10px;
+    font-family: system-ui, sans-serif;
+    font-size: 15px;
+
+}
+
+/*Colonna SX (tabella ingredienti)*/
+.ingredientTd {
+    font-style: italic;
+    font-weight: bold;
+    width:100%;
+    color: #4d4d4d;
+}
+
+/*Colonna DX (tabella ingredienti)*/
+.measureTd {
+    text-align: right;
+    color: #666;
+    width:100%
+}
+
+/*Per avere le righe di colore diverso: colora le caselle dispari in modo diverso*/
+.ingredientTr:nth-child(odd) {
+    background: #ebebeb;
+}
+
+
+/*Le recipcard sono le sezioni della pagina recipe.html*/
 .recipeCard h1 {
     text-transform: uppercase;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 
@@ -343,7 +360,8 @@ button {
     white-space: pre-line;  /*Mantiene i caratteri /n e /r sul parsato*/
 }
 
-textarea {
+/*la Textarea delle note personali dell'utente*/
+#privateNoteInput {
     resize: none;
     display:block;
     box-sizing: border-box;
@@ -359,6 +377,7 @@ textarea {
         'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+/*Le 3 righe sfalsate della tabella contenute nella recipe.html*/
 .firstRow {
     display: grid;
     grid-template-columns: 3fr 2fr;
@@ -381,6 +400,7 @@ textarea {
     margin: 20px;
 }
 
+/*Nelle recensioni, contiene nr di voti*/
 .voteCard {
     align-items: center;
     display: flex;
@@ -391,6 +411,7 @@ textarea {
     gap:10px;
 }
 
+/*Tasti rossi (usati anche in profile.html)*/
 .redButton {
     background: #ffb9b9;
     color:#525252;    
@@ -404,6 +425,7 @@ textarea {
     background: #ff9191;
 }
 
+/*Tasti verdi (usati anche in profile.html)*/
 .greenButton {
     background: #b9ffbc;
     color:#525252;    
@@ -424,6 +446,7 @@ textarea {
     color:#c9c9c9;
 }
 
+
 #preparationDate {
     border-radius: 20px;
     padding:10px;
@@ -441,6 +464,7 @@ textarea {
     background:#ff517d
 }
 
+/*Contiene la textarea delle note dell'utente*/
 .note {
     display: flex;
     flex-direction: column;
@@ -455,6 +479,9 @@ textarea {
     box-shadow: 0 5px 15px rgba(0,0,0,.1);
 }
 
+/*
+    La sezione dov'è mostrato il titolo della ricetta e il tasto per salvare nei preferiti, e l'immagine.
+*/
 .title {
     display: grid;
     grid-template-columns: 1fr
@@ -479,10 +506,12 @@ textarea {
     left: 0;
     width: 100%;   
     height: 100%;   
-    object-fit: cover; 
+    object-fit: cover; /*La casella si ridimensiona ritagliando il contenuto (foto) invece di distorcerla*/
     border-radius: 20px;    
 
 }
+
+/*Le impostazioni grafiche delle caselle che contiene il titolo e il tasto dei preferiti*/
 
 .infoColumn2 {
     display: grid;
@@ -499,7 +528,9 @@ textarea {
         'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-
+/*
+    Su cellulare e finestre strette, mostra una scheda per riga
+*/
 @media (max-width: 700px) {
     .firstRow {
         grid-template-columns: auto;
@@ -533,6 +564,7 @@ textarea {
 
 /*
     PROFILE BAR
+    La barra in alto con i tasti logout, impostaizoni profilo, ricettario e torna in home.
 */
 
 .profileBar {
@@ -556,7 +588,7 @@ textarea {
         'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
         'Open Sans', 'Helvetica Neue', sans-serif;
 }
-
+/*il div che contiene i tasti*/
 .menuUserCookbook span {
     font-weight: normal;
     text-transform: uppercase;
@@ -575,8 +607,8 @@ textarea {
 }
 
 /*
-    Se la dimensione della barra è troppo piccola, i tasti finiscono
-    sopra la scritta
+    Se la dimensione della barra è troppo piccola, i tasti possono sforare
+    nella zona occupata dalla scritta, e questa sparisce
 */
 @media (max-width: 480px) {
     .profileBar > span {
@@ -596,7 +628,7 @@ textarea {
 }
 
 /*
-    Anima i tasti della barra in alto
+    Anima i tasti della barra in alto, quando la pagina è poco larga, o su mobile
 */
 @media (max-width: 723px) {
     .menuUserCookbook span {
@@ -631,7 +663,7 @@ textarea {
 */
 
 .searchContainer {
-    position: sticky;
+    position: sticky;   /*La barra è fluttuante*/
     background: rgb(245, 245, 245);
     padding: 10px;
     margin: 10px;
@@ -647,7 +679,8 @@ textarea {
 
 }
 
-
+/*In homepage, contiene la barra.
+Nelle schermate di registrazione/login, E' la barra*/
 .searchbarContainer{
     border-radius: 20px;
     border: 2px solid #b0b0b0;
@@ -659,6 +692,7 @@ textarea {
     margin: 0px 10px 0px 10px;
 }
 
+/*il tasto che apre la finestrella che contiene tutte le lettere*/
 #lettersContainerDrawer {
     flex:0 0 40px;
     width:40px;
@@ -667,7 +701,7 @@ textarea {
     white-space: nowrap;
 }
 
-.searchBar{
+.searchBar {
     flex:1;
     background: transparent;
     border: 0px solid;
@@ -761,12 +795,10 @@ textarea {
     padding-bottom: 10px;
 }
 
+/*Su mobile o pagine strette, mostra le schede in colonna*/
 @media(max-width:700px) {
     .profileSettingGrid {
-        display: grid;
         grid-template-columns: auto;
-        gap: 20px;
-        margin: 20px;
     }
 
 }

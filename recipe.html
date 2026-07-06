@@ -57,6 +57,7 @@
         <div class="lastRow">
             <div class="recipeCard review">
                 <h3>Recensione</h3><br>
+                <!-- Casella difficoltà, con slider e valore numerico dello slider -->
                 <div class="infoCard difficultyBg">
                     <div class="iconBox difficulty"><i class="fa-solid fa-fire"></i></div>
                     <div class="infoText"><b>Difficoltà</b></div>
@@ -64,18 +65,22 @@
                     <b class="vote" id="difficultyLabel"></b>
                 </div>
 
+                <!-- Casella gusto, con slider e valore numerico dello slider -->
                 <div class="infoCard tasteBg">
                     <div class="iconBox taste"><i class="fa-solid fa-star"></i></div>
                     <div class="infoText"><b>Gusto</b></div>
                     <input type="range" id="tasteSlider" step="0.1" min="0" max="5" value="3"></input>
                     <b class="vote" id="tasteLabel"></b>
                 </div>
+
+                <!-- Casella data preparazione, con solo l'input con la data -->
                 <div class="infoCard dateBg">
                     <div class="iconBox date"><i class="fa-solid fa-calendar"></i></div>
                     <div class="infoText"><b>Preparato il</b></div>
                     <input type="date" id="preparationDate"></input>
                 </div>
 
+                <!-- Casella voto, contiene anche i tasti per aggiungere, modificare o eliminare le recensioni -->
                 <div class="infoCard voteCard">
                     <b>Voti: <span id="reviewCounter"></span></b><br>
                     <div>
@@ -84,8 +89,10 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Sezione che contiene le note visibili solo dall'utente -->
             <div class="recipeCard note">
-                <h3>Aggiungi una nota</h3>
+                <h3>Aggiungi una nota (solo tu puoi vederle)</h3>
                 <textarea id="privateNoteInput"></textarea>
                 <button id="saveNoteButton">Salva nota</button>
             </div>
